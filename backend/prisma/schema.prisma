@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  id        Int       @id @default(autoincrement())
+  category  String
+  title1    String
+  title2    String?
+  image     String?
+  dateRange String?
+  status    String    @default("Đang mở") // Đang mở, Đã đóng
+  price     String?
+  link      String?
+  content   String?   @db.Text
+  deadline  String?   // Hạn đăng ký
+  
+  students  Student[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Student {
+  id          Int      @id @default(autoincrement())
+  mssv        String?
+
+  // Họ tên
+  hoDem       String?  // Họ và tên đệm
+  ten         String?  // Tên
+  name        String   // Họ tên đầy đủ (hoDem + ten) — giữ để tương thích
+
+  // Thông tin cá nhân
+  gender      String?  // Giới tính: Nam / Nữ (từ idGioiTinh)
+  dob         String?  // Ngày sinh
+
+  // Giấy tờ tuỳ thân
+  idCard      String   // Số CMND/CCCD/Hộ chiếu
+  ngayCapCMND String?  // Ngày cấp
+
+  // Nơi sinh & nhân khẩu học
+  noiSinh     String?  // Tỉnh/TP nơi sinh
+  quocTich    String?  // Quốc tịch
+  danToc      String?  // Dân tộc
+  tonGiao     String?  // Tôn giáo
+
+  // Liên hệ
+  contact     String   // Số điện thoại
+  email       String?
+
+  // Cơ quan công tác
+  tinhCoQuan  String?  // Tỉnh/TP công tác
+  xuatHoaDon  Boolean  @default(false) // Xuất hoá đơn cơ quan
+
+  // Địa chỉ liên lạc
+  tinhLienLac  String? // Tỉnh/TP
+  huyenLienLac String? // Quận/Huyện (Phường/Xã)
+  soNhaLienLac String? // Số nhà, tên đường
+
+  // Đối tượng
+  loaiDoiTuong String?
+  maDoiTuong   String?
+
+  // Khoá học đăng ký
+  courseName  String?  // Tên khoá học (lưu text để giữ lịch sử)
+  date        String?  // Ngày đăng ký DD/MM/YYYY
+
+  // Trạng thái lead (phễu CRM 5 bước, + Huỷ)
+  // Mới -> Đã liên hệ -> Đã đăng ký -> Đã thanh toán -> Hoàn thành | Huỷ
+  status      String   @default("Mới")
+
+  courseId    Int?
+  course      Course?  @relation(fields: [courseId], references: [id])
+
+  // Ảnh thẻ 4x6 (base64 data URI)
+  avatar      String?  @db.Text
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  fullName  String
+  email     String    @unique
+  password  String
+  role      String    @default("Học viên") // Admin, Nhân viên, Học viên
+  status    String    @default("Hoạt động") // Hoạt động, Đã khoá
+  lastLogin DateTime?
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  image     String?
+  date      String?  // Ngày đăng
+  content   String   @db.Text
+  type      String   // 'news' hoặc 'notification'
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  image     String
+  link      String?
+  status    String   @default("Hoạt động")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

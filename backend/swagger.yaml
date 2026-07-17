@@ -1,0 +1,447 @@
+openapi: 3.0.0
+info:
+  title: API Quản lý Khoá Học (Văn Lang University)
+  description: API document dùng để test các chức năng hiện có trên Web UI.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Local server
+paths:
+  # ----------------------------------------------------
+  # COURSES
+  # ----------------------------------------------------
+  /courses:
+    get:
+      summary: Lấy danh sách khoá học
+      tags: [Courses]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+    post:
+      summary: Tạo khoá học mới
+      tags: [Courses]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '201':
+          description: Created
+          
+  /courses/{id}:
+    get:
+      summary: Lấy thông tin 1 khoá học
+      tags: [Courses]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Cập nhật khoá học
+      tags: [Courses]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Xoá khoá học
+      tags: [Courses]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Deleted
+
+  # ----------------------------------------------------
+  # STUDENTS
+  # ----------------------------------------------------
+  /students:
+    get:
+      summary: Lấy danh sách học viên
+      tags: [Students]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    post:
+      summary: Thêm học viên (Đăng ký)
+      tags: [Students]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '201':
+          description: Created
+          
+  /students/{id}:
+    put:
+      summary: Cập nhật học viên
+      tags: [Students]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Xoá học viên
+      tags: [Students]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Deleted
+
+  # ----------------------------------------------------
+  # USERS
+  # ----------------------------------------------------
+  /users:
+    get:
+      summary: Lấy danh sách tài khoản
+      tags: [Users]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Tạo tài khoản mới
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: Created
+          
+  /users/{id}:
+    put:
+      summary: Cập nhật tài khoản / Phân quyền
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Xoá tài khoản
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Deleted
+
+  # ----------------------------------------------------
+  # ARTICLES
+  # ----------------------------------------------------
+  /articles:
+    get:
+      summary: Lấy danh sách tin tức/thông báo
+      tags: [Articles]
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [news, notification]
+          description: Filter by type
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+    post:
+      summary: Tạo bài viết mới
+      tags: [Articles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleInput'
+      responses:
+        '201':
+          description: Created
+          
+  /articles/{id}:
+    put:
+      summary: Cập nhật bài viết
+      tags: [Articles]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Xoá bài viết
+      tags: [Articles]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Deleted
+
+  # ----------------------------------------------------
+  # BANNERS
+  # ----------------------------------------------------
+  /banners:
+    get:
+      summary: Lấy danh sách banner
+      tags: [Banners]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Banner'
+    post:
+      summary: Tạo banner mới
+      tags: [Banners]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerInput'
+      responses:
+        '201':
+          description: Created
+          
+  /banners/{id}:
+    put:
+      summary: Cập nhật banner
+      tags: [Banners]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Xoá banner
+      tags: [Banners]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Deleted
+
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        id: { type: integer }
+        category: { type: string }
+        title1: { type: string }
+        title2: { type: string }
+        image: { type: string }
+        dateRange: { type: string }
+        status: { type: string }
+        price: { type: string }
+        link: { type: string }
+        deadline: { type: string }
+        createdAt: { type: string, format: date-time }
+    CourseInput:
+      type: object
+      required: [category, title1]
+      properties:
+        category: { type: string }
+        title1: { type: string }
+        title2: { type: string }
+        image: { type: string }
+        dateRange: { type: string }
+        status: { type: string, default: "Đang mở" }
+        price: { type: string }
+        deadline: { type: string }
+
+    Student:
+      type: object
+      properties:
+        id: { type: integer }
+        mssv: { type: string }
+        name: { type: string }
+        gender: { type: string }
+        dob: { type: string }
+        idCard: { type: string }
+        contact: { type: string }
+        email: { type: string }
+        courseName: { type: string }
+        date: { type: string }
+        status: { type: string }
+    StudentInput:
+      type: object
+      required: [name, idCard, contact]
+      properties:
+        mssv: { type: string }
+        name: { type: string }
+        gender: { type: string, enum: [Nam, Nữ] }
+        dob: { type: string }
+        idCard: { type: string }
+        contact: { type: string }
+        email: { type: string }
+        courseName: { type: string }
+        date: { type: string }
+        status: { type: string, enum: [Chưa thanh toán, Đã thanh toán] }
+
+    User:
+      type: object
+      properties:
+        id: { type: integer }
+        username: { type: string }
+        fullName: { type: string }
+        email: { type: string }
+        role: { type: string }
+        status: { type: string }
+        lastLogin: { type: string, format: date-time }
+    UserInput:
+      type: object
+      required: [username, fullName, email, password]
+      properties:
+        username: { type: string }
+        fullName: { type: string }
+        email: { type: string }
+        password: { type: string }
+        role: { type: string, enum: [Admin, Nhân viên, Học viên] }
+        status: { type: string, enum: [Hoạt động, Đã khoá] }
+
+    Article:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        image: { type: string }
+        date: { type: string }
+        content: { type: string }
+        type: { type: string }
+    ArticleInput:
+      type: object
+      required: [title, content, type]
+      properties:
+        title: { type: string }
+        image: { type: string }
+        date: { type: string }
+        content: { type: string }
+        type: { type: string, enum: [news, notification] }
+
+    Banner:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        image: { type: string }
+        link: { type: string }
+        status: { type: string }
+    BannerInput:
+      type: object
+      required: [image]
+      properties:
+        title: { type: string }
+        image: { type: string }
+        link: { type: string }
+        status: { type: string, default: "Hoạt động" }

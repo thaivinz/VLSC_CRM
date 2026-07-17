@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE "Student" ADD COLUMN     "avatar" TEXT,
+ADD COLUMN     "danToc" TEXT,
+ADD COLUMN     "hoDem" TEXT,
+ADD COLUMN     "huyenLienLac" TEXT,
+ADD COLUMN     "loaiDoiTuong" TEXT,
+ADD COLUMN     "maDoiTuong" TEXT,
+ADD COLUMN     "ngayCapCMND" TEXT,
+ADD COLUMN     "noiSinh" TEXT,
+ADD COLUMN     "quocTich" TEXT,
+ADD COLUMN     "soNhaLienLac" TEXT,
+ADD COLUMN     "ten" TEXT,
+ADD COLUMN     "tinhCoQuan" TEXT,
+ADD COLUMN     "tinhLienLac" TEXT,
+ADD COLUMN     "tonGiao" TEXT,
+ADD COLUMN     "xuatHoaDon" BOOLEAN NOT NULL DEFAULT false;
