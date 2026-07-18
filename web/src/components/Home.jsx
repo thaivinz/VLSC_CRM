@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { coursesApi, bannersApi, articlesApi } from '../utils/api';
+import { coursesApi, articlesApi } from '../utils/api';
 import { createPortal } from 'react-dom';
+
+// Banner tĩnh từ web/public/images — dùng thẳng, không lấy từ database.
+const BANNERS = [
+  '/images/banner01.png',
+  '/images/banner02.png',
+  '/images/banner03.png',
+  '/images/banner04.png',
+];
 
 export default function Home() {
     const [showFastRegisterModal, setShowFastRegisterModal] = useState(false);
     const [activeCategory, setActiveCategory] = useState('All');
     const [courses, setCourses] = useState([]);
-    const [banners, setBanners] = useState([]);
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                const [allCourses, allBanners, allArticles] = await Promise.all([
+                const [allCourses, allArticles] = await Promise.all([
                     coursesApi.getAll(),
-                    bannersApi.getAll(),
                     articlesApi.getAll(),
                 ]);
                 setCourses(allCourses);
-                setBanners(allBanners.filter(b => b.status === 'Hoạt động'));
                 setArticles(allArticles);
             } catch (err) {
                 console.error('Lỗi tải dữ liệu trang chủ:', err);
@@ -82,10 +87,10 @@ export default function Home() {
                         <section _ngcontent-ohb-c293="" className="relative z-[20] overflow-hidden">
                             <div _ngcontent-ohb-c293="" className="mySwiper swiper">
                                 <div className="swiper-wrapper">
-                                    {banners.map((banner) => (
-                                        <div key={banner.id} className="swiper-slide ng-star-inserted">
+                                    {BANNERS.map((src, i) => (
+                                        <div key={src} className="swiper-slide ng-star-inserted">
                                             <a _ngcontent-ohb-c293="" className="ng-star-inserted">
-                                                <img _ngcontent-ohb-c293="" alt="banner" className="w-full max-h-[600px] object-cover" src={banner.image || banner.url} />
+                                                <img _ngcontent-ohb-c293="" alt={`banner ${i + 1}`} className="w-full max-h-[600px] object-cover" src={src} />
                                             </a>
                                         </div>
                                     ))}

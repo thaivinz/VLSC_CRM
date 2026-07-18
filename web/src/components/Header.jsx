@@ -49,7 +49,7 @@ export default function Header({ path = typeof window !== 'undefined' ? window.l
                     
                         
                             
-                                <a nz-dropdown="" nztrigger="click" style={{ display: 'flex', alignItems: 'center', padding: '5px 15px', cursor: 'pointer', borderRadius: '30px', textDecoration: 'none' }}
+                                <a nz-dropdown="" nztrigger="click" href="/gioi-thieu" style={{ display: 'flex', alignItems: 'center', padding: '5px 15px', cursor: 'pointer', borderRadius: '30px', textDecoration: 'none' }}
                                    onMouseEnter={e => { if (!isActive('/gioi-thieu')) { e.currentTarget.querySelector('span').style.color = '#D72134'; e.currentTarget.querySelector('span').style.borderBottomColor = '#D72134'; } }}
                                    onMouseLeave={e => { if (!isActive('/gioi-thieu')) { e.currentTarget.querySelector('span').style.color = '#1B2C43'; e.currentTarget.querySelector('span').style.borderBottomColor = 'transparent'; } }}
                                 >
@@ -190,7 +190,7 @@ export default function Header({ path = typeof window !== 'undefined' ? window.l
 </defs>
 </svg></svg-icon>
                             </span>
-                            <a _ngcontent-cim-c68="" className="block py-[24px] relative text-[#1D1D1D] font-semibold xl:text-[14px] text-[16px] cursor-pointer z-10 hover:text-[#D72134]">
+                            <a _ngcontent-cim-c68="" href="/gioi-thieu" className="block py-[24px] relative text-[#1D1D1D] font-semibold xl:text-[14px] text-[16px] cursor-pointer z-10 hover:text-[#D72134]">
                                 Giới thiệu
                             </a>
                         </div>

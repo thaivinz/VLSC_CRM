@@ -5,6 +5,7 @@ import Home from './components/Home'
 import ThongBao from './components/ThongBao'
 import Register from './components/Register'
 import TinTuc from './components/TinTuc'
+import GioiThieu from './components/GioiThieu'
 import ArticleDetail from './components/ArticleDetail'
 import CourseDetail from './components/CourseDetail'
 import CourseList from './components/CourseList'
@@ -76,8 +77,9 @@ function App() {
   return (
     <>
       <Header path={path} />
-      {path.startsWith('/thong-bao') ? (path.length > 11 ? <ArticleDetail path={path} /> : <ThongBao />) : 
-       path.startsWith('/register') ? <Register /> : 
+      {path.startsWith('/thong-bao') ? (path.length > 11 ? <ArticleDetail path={path} /> : <ThongBao />) :
+       path.startsWith('/gioi-thieu') ? <GioiThieu /> :
+       path.startsWith('/register') ? <Register /> :
        path.startsWith('/tin-tuc') ? (path.length > 9 ? <ArticleDetail path={path} /> : <TinTuc />) : 
        path === '/khoa-hoc' ? <CourseList /> : 
        path.startsWith('/khoa-hoc/') ? <CourseDetail /> : 
